@@ -44,34 +44,7 @@ gst-launch-1.0 \
     d.audio ! mix.
 ###
 
-### Test 2 (cefbin w/ xvimagesink)
-export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
-gst-launch-1.0 \
-    cefbin name=cef cefsrc::url="https://soundcloud.com/platform/sama" \
-    cef.video ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! xvimagesink \
-    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
-###
-
-### Test 3 (playbin)
-export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
-gst-launch-1.0 playbin uri=web+https://www.soundcloud.com/platform/sama
-###
-
-### Test 4 (cefbin w/ gtk4paintablesink)
-export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
-gst-launch-1.0 cefbin name=cef cefsrc::url="https://www.soundcloud.com/platform/sama" \
-    cefsrc::gpu=true ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! gtk4paintablesink \
-    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
-###
-
-### Test 4 (cefbin w/ clappersink)
-export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
-gst-launch-1.0 cefbin name=cef cefsrc::url="https://www.soundcloud.com/platform/sama" \
-    cefsrc::gpu=true ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! clappersink \
-    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
-###
-
-### Test 5 (full pipeline w/ gtk4paintablesink)
+### Test 2 (full pipeline w/ gtk4paintablesink)
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 gst-launch-1.0 \
     cefsrc url="https://soundcloud.com/platform/sama" ! \
@@ -82,7 +55,7 @@ gst-launch-1.0 \
     d.audio ! mix.
 ###
 
-### Test 6 (full pipeline w/ clappersink)
+### Test 3 (full pipeline w/ clappersink)
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 gst-launch-1.0 \
     cefsrc url="https://soundcloud.com/platform/sama" ! \
@@ -93,26 +66,48 @@ gst-launch-1.0 \
     d.audio ! mix.
 ###
 
+### Test 4 (cefbin w/ xvimagesink)
+export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
+gst-launch-1.0 \
+    cefbin name=cef cefsrc::url="https://soundcloud.com/platform/sama" \
+    cef.video ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! xvimagesink \
+    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
+###
+
+### Test 5 (cefbin w/ gtk4paintablesink)
+export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
+gst-launch-1.0 cefbin name=cef cefsrc::url="https://www.soundcloud.com/platform/sama" \
+    cefsrc::gpu=true ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! gtk4paintablesink \
+    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
+###
+
+### Test 6 (cefbin w/ clappersink)
+export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
+gst-launch-1.0 cefbin name=cef cefsrc::url="https://www.soundcloud.com/platform/sama" \
+    cefsrc::gpu=true ! video/x-raw, width=1920, height=1080, framerate=60/1 ! videoconvert ! clappersink \
+    cef.audio ! audioconvert ! audiomixer ! autoaudiosink
+###
+
 ### Test 7 (playbin3)
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 gst-launch-1.0 playbin3 uri=web+https://www.soundcloud.com/platform/sama
 ###
 
-### Test 8 (playbin3 w/ gtk4paintablesink)
+### Test 8 (video playbin3 w/ gtk4paintablesink)
 export GST_DEBUG=WARNING
 export GST_DEBUG_DUMP_DOT_DIR=dotdir-08
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
-gst-launch-1.0 playbin3 uri=web+https://www.soundcloud.com/platform/sama \
+gst-launch-1.0 playbin3 uri=file://"$(pwd)"/resource/video.mp4 \
     video-sink=gtk4paintablesink
 ###
 
-### Test 9 (video playbin3 w/ gtk4paintablesink)
+### Test 9 (playbin3 w/ gtk4paintablesink)
 export GST_DEBUG=WARNING
 export GST_DEBUG_DUMP_DOT_DIR=dotdir-09
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
-gst-launch-1.0 playbin3 uri=file://"$(pwd)"/resource/video.mp4 \
+gst-launch-1.0 playbin3 uri=web+https://www.soundcloud.com/platform/sama \
     video-sink=gtk4paintablesink
 ###
 
@@ -125,33 +120,42 @@ gst-launch-1.0 playbin3 uri=file://"$(pwd)"/resource/video.mp4 \
     video-sink=clappersink
 ###
 
-### Test 11 (video GJS w/ gtk4paintablesink)
+### Test 11 (playbin3 w/ clappersink)
 export GST_DEBUG=WARNING
 export GST_DEBUG_DUMP_DOT_DIR=dotdir-11
+export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
+mkdir $GST_DEBUG_DUMP_DOT_DIR
+gst-launch-1.0 playbin3 uri=web+https://www.soundcloud.com/platform/sama \
+    video-sink=clappersink
+###
+
+### Test 12 (video gjs w/ gtk4paintablesink)
+export GST_DEBUG=WARNING
+export GST_DEBUG_DUMP_DOT_DIR=dotdir-12
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
 gjs player.js gtk4paintablesink file://"$(pwd)"/resource/video.mp4
 ###
 
-### Test 12 (GJS w/ gtk4paintablesink)
+### Test 13 (gjs w/ gtk4paintablesink)
 export GST_DEBUG=WARNING
-export GST_DEBUG_DUMP_DOT_DIR=dotdir-12
+export GST_DEBUG_DUMP_DOT_DIR=dotdir-13
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
 gjs player.js gtk4paintablesink web+https://www.soundcloud.com/platform/sama
 ###
 
-### Test 13 (video GJS w/ clappersink)
+### Test 14 (video gjs w/ clappersink)
 export GST_DEBUG=WARNING
-export GST_DEBUG_DUMP_DOT_DIR=dotdir-13
+export GST_DEBUG_DUMP_DOT_DIR=dotdir-14
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
 gjs player.js clappersink file://"$(pwd)"/resource/video.mp4
 ###
 
-### Test 14 (GJS w/ clappersink)
+### Test 15 (gjs w/ clappersink)
 export GST_DEBUG=WARNING
-export GST_DEBUG_DUMP_DOT_DIR=dotdir-14
+export GST_DEBUG_DUMP_DOT_DIR=dotdir-15
 export GST_PLUGIN_PATH=build/lib/gstreamer-1.0:"$GST_PLUGIN_PATH"
 mkdir $GST_DEBUG_DUMP_DOT_DIR
 gjs player.js clappersink web+https://www.soundcloud.com/platform/sama
